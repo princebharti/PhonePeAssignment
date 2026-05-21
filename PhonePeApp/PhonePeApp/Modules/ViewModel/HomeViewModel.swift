@@ -19,7 +19,8 @@ class HomeViewModel {
     var items: [ChildHomeViewModel] = []
     
     func fetchDataAndUpdate() {
-        let endPoint = "https://api.themoviedb.org/3/movie/now_playing?api_key=TMDB_API_KEY_REDACTED&language=en-US&page=1"
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "TMDB_API_KEY") as? String ?? ""
+        let endPoint = "https://api.themoviedb.org/3/movie/now_playing?api_key=\(apiKey)&language=en-US&page=1"
         DataManager.loadData(forEndPoint: endPoint) { [weak self] (model:HomeMetaModel?, error:Error?) in
             if let model = model {
                 self?.prepareViewModelAndUpdate(model: model)
